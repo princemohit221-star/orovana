@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { User, Package, ShoppingCart, MapPin, Bell, Settings, LogOut, Edit3 } from 'lucide-react';
+import { User, Package, ShoppingCart, MapPin, Bell, Settings, LogOut, CreditCard as Edit3 } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
 import ProfileSection from './ProfileSection';
 import OrderHistory from './OrderHistory';

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Edit3, Save, X } from 'lucide-react';
+import { CreditCard as Edit3, Save, X } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
 
 const ProfileSection = () => {
