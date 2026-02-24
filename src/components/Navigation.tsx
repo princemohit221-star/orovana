@@ -48,6 +48,35 @@ const Navigation = ({ currentPage, setCurrentPage }: NavigationProps) => {
             </button>
           </div>
           
+          {user ? (
+            <div className="hidden md:flex items-center space-x-3">
+              <button 
+                onClick={() => handleNavClick('dashboard')}
+                className="flex items-center space-x-2 text-charcoal hover:text-forest-green transition-colors"
+              >
+                <User size={20} />
+                <span className="hidden sm:block text-sm">
+                  {userProfile?.first_name || 'Account'}
+                </span>
+              </button>
+            </div>
+          ) : (
+            <div className="hidden md:flex items-center space-x-3">
+              <button 
+                onClick={() => handleAuthClick('signin')}
+                className="text-charcoal hover:text-forest-green transition-colors text-sm font-medium"
+              >
+                Sign In
+              </button>
+              <button 
+                onClick={() => handleAuthClick('signup')}
+                className="bg-forest-green text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-green-800 transition-colors"
+              >
+                Sign Up
+              </button>
+            </div>
+          )}
+          
           <div className="hidden md:block">
             <div className="ml-10 flex items-baseline space-x-4">
               {navItems.map((item) => (
@@ -55,35 +84,6 @@ const Navigation = ({ currentPage, setCurrentPage }: NavigationProps) => {
                   key={item.id}
                   onClick={() => handleNavClick(item.id)}
                   className={`px-3 py-2 text-sm font-medium transition-colors ${
-              {user ? (
-                <div className="flex items-center space-x-3">
-                  <button 
-                    onClick={() => handleNavClick('dashboard')}
-                    className="flex items-center space-x-2 text-charcoal hover:text-forest-green transition-colors"
-                  >
-                    <User size={20} />
-                    <span className="hidden sm:block text-sm">
-                      {userProfile?.first_name || 'Account'}
-                    </span>
-                  </button>
-                </div>
-              ) : (
-                <div className="hidden md:flex items-center space-x-3">
-                  <button 
-                    onClick={() => handleAuthClick('signin')}
-                    className="text-charcoal hover:text-forest-green transition-colors text-sm font-medium"
-                  >
-                    Sign In
-                  </button>
-                  <button 
-                    onClick={() => handleAuthClick('signup')}
-                    className="bg-forest-green text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-green-800 transition-colors"
-                  >
-                    Sign Up
-                  </button>
-                </div>
-              )}
-              
                     currentPage === item.id
                       ? 'text-forest-green border-b-2 border-forest-green'
                       : 'text-charcoal hover:text-forest-green'
@@ -107,23 +107,6 @@ const Navigation = ({ currentPage, setCurrentPage }: NavigationProps) => {
               >
                 {isOpen ? <X size={20} /> : <Menu size={20} />}
                 
-                {!user && (
-                  <div className="pt-3 border-t border-gray-200 space-y-2">
-                    <button 
-                      onClick={() => handleAuthClick('signin')}
-                      className="block w-full text-left px-3 py-2 text-sm font-medium text-charcoal hover:text-forest-green transition-colors"
-                    >
-                      Sign In
-                    </button>
-                    <button 
-                      onClick={() => handleAuthClick('signup')}
-                      className="block w-full text-left px-3 py-2 text-sm font-medium bg-forest-green text-white rounded-lg hover:bg-green-800 transition-colors"
-                    >
-                      Sign Up
-                    </button>
-                  </div>
-                )}
-              </button>
             </div>
           </div>
         </div>
@@ -144,6 +127,23 @@ const Navigation = ({ currentPage, setCurrentPage }: NavigationProps) => {
                   {item.label}
                 </button>
               ))}
+              
+              {!user && (
+                <div className="pt-3 border-t border-gray-200 space-y-2">
+                  <button 
+                    onClick={() => handleAuthClick('signin')}
+                    className="block w-full text-left px-3 py-2 text-sm font-medium text-charcoal hover:text-forest-green transition-colors"
+                  >
+                    Sign In
+                  </button>
+                  <button 
+                    onClick={() => handleAuthClick('signup')}
+                    className="block w-full text-left px-3 py-2 text-sm font-medium bg-forest-green text-white rounded-lg hover:bg-green-800 transition-colors"
+                  >
+                    Sign Up
+                  </button>
+                </div>
+              )}
             </div>
           </div>
         )}
