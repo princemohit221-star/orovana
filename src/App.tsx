@@ -1,7 +1,8 @@
 import { useState } from 'react';
+import { AuthProvider } from './contexts/AuthContext';
 import Navigation from './components/Navigation';
 import Hero from './components/Hero';
-import FeaturedCollection from './components/FeaturedCollection';
+import ProductSections from './components/shop/ProductSections';
 import IngredientsSection from './components/IngredientsSection';
 import WhyChooseUs from './components/WhyChooseUs';
 import Testimonials from './components/Testimonials';
@@ -13,25 +14,39 @@ import ProductPage from './components/ProductPage';
 import ShopPage from './components/ShopPage';
 import AboutPage from './components/AboutPage';
 import ContactPage from './components/ContactPage';
+import UserDashboard from './components/dashboard/UserDashboard';
 
 function App() {
   const [currentPage, setCurrentPage] = useState('home');
+  const [selectedProductId, setSelectedProductId] = useState<string | null>(null);
+  const [selectedSection, setSelectedSection] = useState<string | null>(null);
 
   const renderPage = () => {
     switch (currentPage) {
       case 'product':
-        return <ProductPage />;
+        return <ProductPage productId={selectedProductId} />;
       case 'shop':
-        return <ShopPage />;
+        return <ShopPage section={selectedSection} />;
       case 'about':
         return <AboutPage />;
       case 'contact':
         return <ContactPage />;
+      case 'dashboard':
+        return <UserDashboard />;
       default:
         return (
           <>
             <Hero />
-            <FeaturedCollection onProductClick={() => setCurrentPage('product')} />
+            <ProductSections 
+              onProductClick={(productId) => {
+                setSelectedProductId(productId);
+                setCurrentPage('product');
+              }}
+              onSeeAllClick={(section) => {
+                setSelectedSection(section);
+                setCurrentPage('shop');
+              }}
+            />
             <IngredientsSection />
             <WhyChooseUs />
             <Testimonials />
@@ -44,11 +59,13 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen">
-      <Navigation currentPage={currentPage} setCurrentPage={setCurrentPage} />
-      {renderPage()}
-      <Footer />
-    </div>
+    <AuthProvider>
+      <div className="min-h-screen">
+        <Navigation currentPage={currentPage} setCurrentPage={setCurrentPage} />
+        {renderPage()}
+        <Footer />
+      </div>
+    </AuthProvider>
   );
 }
 
